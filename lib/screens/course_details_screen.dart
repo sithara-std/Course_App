@@ -263,8 +263,8 @@ class _LessonTile extends StatelessWidget {
 
 //// ---------------- BOTTOM BAR ----------------
 class _BottomBar extends StatelessWidget {
-  //final Course course;
-  //const _BottomBar({required this.course});
+  final Course course;
+  const _BottomBar({required this.course});
 
   @override
   Widget build(BuildContext context) {
@@ -296,7 +296,7 @@ class _BottomBar extends StatelessWidget {
                 ),
               );
             }, // UI ONLY
-           style: ElevatedButton.styleFrom(
+            style: ElevatedButton.styleFrom(
               backgroundColor: const Color.fromARGB(255, 114, 118, 149),
               padding:
                   const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
