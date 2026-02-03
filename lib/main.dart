@@ -1,5 +1,5 @@
+import 'package:course_app/screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
-import 'screens/home_screen.dart';
 
 void main() {
   runApp(const InstituteApp());
@@ -17,7 +17,7 @@ class InstituteApp extends StatelessWidget {
         useMaterial3: true,
         colorSchemeSeed: Colors.indigo,
       ),
-      home: const HomeScreen(),
+      home: const DashboardScreen(),
     );
   }
 }
