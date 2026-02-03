@@ -9,7 +9,7 @@ class CourseListScreen extends StatelessWidget {
     Course(
       id: "1",
       name: "Flutter Development",
-      description: "Build modern mobile apps",
+      description: "Build modern mobile ",
       duration: "3 Months",
       fee: 35000,
     ),
