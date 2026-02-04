@@ -105,7 +105,7 @@ class _FeedbackFormScreenState extends State<FeedbackFormScreen> {
               ),
               const SizedBox(height: 12),
               DropdownButtonFormField<String>(
-                initialValue: requestType,
+                value: requestType,
                 items: const [
                   DropdownMenuItem(value: "Feedback", child: Text("Feedback")),
                   DropdownMenuItem(value: "Request", child: Text("Request")),
