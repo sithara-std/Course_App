@@ -175,7 +175,11 @@ class _RegisterCourseScreenState extends State<RegisterCourseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Course Registration"),
+        title: const Text("Course Registration",
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color:Colors.white),),
+        backgroundColor: const Color.fromARGB(255, 1, 6, 49),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -224,7 +228,16 @@ class _RegisterCourseScreenState extends State<RegisterCourseScreen> {
                   onPressed: _submitRegistration,
                   child: const Text("Submit"),
                 ),
+                
               ),
+
+              Center(
+                  child: ElevatedButton.icon(
+                    onPressed: _exportPdf,
+                    icon: const Icon(Icons.picture_as_pdf),
+                    label: const Text("Export PDF"),
+                  ),
+                ),
             ],
           ),
         ),
@@ -249,7 +262,39 @@ class _RegisterCourseScreenState extends State<RegisterCourseScreen> {
 }
 
 // ======================= PDF HELPERS =======================
-pw.Widget _sectionTitle(String text) => pw.Text(text);
-pw.Widget _infoRow(String l, String v) => pw.Text("$l : $v");
-pw.Widget _tableHeader(String t) => pw.Text(t);
-pw.Widget _tableCell(String t) => pw.Text(t);
+pw.Widget _sectionTitle(String text) => pw.Padding(
+  padding: const pw.EdgeInsets.symmetric(vertical: 6),
+  child: pw.Text(
+    text,
+    style: pw.TextStyle(
+      fontSize: 14,
+      fontWeight: pw.FontWeight.bold,
+    ),
+  ),
+);
+
+pw.Widget _infoRow(String l, String v) => pw.Padding(
+  padding: const pw.EdgeInsets.symmetric(vertical: 2),
+  child: pw.Row(
+    children: [
+      pw.SizedBox(width: 120, child: pw.Text(l)),
+      pw.Text(": $v"),
+    ],
+  ),
+);
+
+pw.Widget _tableHeader(String t) => pw.Padding(
+  padding: const pw.EdgeInsets.all(6),
+  child: pw.Text(
+    t,
+    style: pw.TextStyle(
+      fontWeight: pw.FontWeight.bold,
+      color: PdfColors.white,
+    ),
+  ),
+);
+
+pw.Widget _tableCell(String t) => pw.Padding(
+  padding: const pw.EdgeInsets.all(6),
+  child: pw.Text(t),
+);
