@@ -9,7 +9,7 @@ import '../models/course.dart';
 class RegisterCourseScreen extends StatefulWidget {
   final Course? course;
 
-  const RegisterCourseScreen({Key? key, this.course}) : super(key: key);
+  const RegisterCourseScreen({super.key, this.course});
 
   @override
   State<RegisterCourseScreen> createState() => _RegisterCourseScreenState();
