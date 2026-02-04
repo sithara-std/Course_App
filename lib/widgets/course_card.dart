@@ -1,6 +1,6 @@
-import 'package:course_app/screens/course_details_screen.dart';
 import 'package:flutter/material.dart';
 import '../models/course.dart';
+import '../screens/course_details_screen.dart';
 
 class CourseCard extends StatelessWidget {
   final Course course;
@@ -21,11 +21,11 @@ class CourseCard extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 16),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: const Color.fromARGB(255, 201, 206, 209),
           borderRadius: BorderRadius.circular(18),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 12,
               offset: const Offset(0, 6),
             ),
@@ -44,7 +44,7 @@ class CourseCard extends StatelessWidget {
             const SizedBox(height: 6),
             Text(
               course.description,
-              style: const TextStyle(color: Colors.grey),
+              style: const TextStyle(color: Color.fromARGB(255, 58, 58, 58)),
             ),
             const SizedBox(height: 14),
             Row(
@@ -52,7 +52,7 @@ class CourseCard extends StatelessWidget {
               children: [
                 _InfoChip(icon: Icons.schedule, label: course.duration),
                 _InfoChip(
-                  icon: Icons.currency_rupee,
+                  icon: Icons.attach_money,
                   label: course.fee.toString(),
                 ),
               ],
