@@ -27,6 +27,13 @@ class _FeedbackFormScreenState extends State<FeedbackFormScreen> {
     }
   }
 
+  @override
+  void dispose() {
+    nameCtrl.dispose();
+    messageCtrl.dispose();
+    super.dispose();
+  }
+
   Future<void> submit() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -49,13 +56,18 @@ class _FeedbackFormScreenState extends State<FeedbackFormScreen> {
             .update(data)
             .eq('id', widget.feedback!['id']);
       }
+
+      if (!mounted) return;
       Navigator.pop(context, true);
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error saving feedback: $e')),
       );
     } finally {
-      setState(() => isLoading = false);
+      if (mounted) {
+        setState(() => isLoading = false);
+      }
     }
   }
 
@@ -65,7 +77,7 @@ class _FeedbackFormScreenState extends State<FeedbackFormScreen> {
       appBar: AppBar(
         title: Text(
           widget.feedback == null ? "Add Feedback" : "Edit Feedback",
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
@@ -135,12 +147,12 @@ class _FeedbackFormScreenState extends State<FeedbackFormScreen> {
                   child: isLoading
                       ? const CircularProgressIndicator(color: Colors.white)
                       : Text(
-                        widget.feedback == null ? "Submit" : "Update",
-                        style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                          widget.feedback == null ? "Submit" : "Update",
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                 ),
               ),
             ],
