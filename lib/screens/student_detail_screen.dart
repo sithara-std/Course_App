@@ -7,24 +7,43 @@ class StudentDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final courses = student['registered_courses'] ?? [];
+    final List courses = student['registered_courses'] ?? [];
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FB),
+
+      // ---------- APP BAR ----------
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF070D3D),
+        elevation: 0,
+        centerTitle: true,
+        title: const Text(
+          "Student Profile",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        iconTheme: const IconThemeData(color: Colors.white),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () {}, // TODO: add edit action
+          ),
+        ],
+      ),
+
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              // ---------- HEADER ----------
+              // ---------- HEADER AVATAR ----------
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 25),
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [
-                      Color.fromARGB(255, 7, 13, 61),
-                      Color(0xFF6E7CFF)
-                    ],
+                    colors: [Color(0xFF070D3D), Color.fromARGB(255, 45, 55, 148)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -35,66 +54,40 @@ class StudentDetailScreen extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    // AppBar Row
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.arrow_back,
-                              color: Colors.white),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                        const Text(
-                          "Student Profile",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const Icon(Icons.edit, color: Colors.white),
-                      ],
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    // Avatar
                     const CircleAvatar(
-                      radius: 45,
+                      radius: 48,
                       backgroundColor: Colors.white24,
-                      child:
-                          Icon(Icons.person, size: 50, color: Colors.white),
+                      child: Icon(Icons.person, size: 55, color: Colors.white),
                     ),
-
                     const SizedBox(height: 12),
-
-                    // Name
                     Text(
                       student['name'] ?? 'No Name',
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 22,
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
                     const SizedBox(height: 4),
-
-                    // Email
                     Text(
                       student['email'] ?? 'No Email',
-                      style: const TextStyle(color: Colors.white70),
+                      style: const TextStyle(
+                        color: Colors.white70,
+                        fontSize: 14,
+                      ),
                     ),
-
                     const SizedBox(height: 25),
 
-                    // Stats
+                    // ---------- STATS ----------
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
-                        _StatCard(title: "6", subtitle: "Courses"),
-                        _StatCard(title: "100%", subtitle: "Attendance"),
-                        _StatCard(title: "A+", subtitle: "Grade"),
+                      children: [
+                        _StatCard(
+                          title: courses.length.toString(),
+                          subtitle: "Courses",
+                        ),
+                        const _StatCard(title: "100%", subtitle: "Attendance"),
+                        const _StatCard(title: "A+", subtitle: "Grade"),
                       ],
                     ),
                   ],
@@ -117,19 +110,28 @@ class StudentDetailScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    Wrap(
-                      spacing: 10,
-                      runSpacing: 8,
-                      children: (courses as List<dynamic>).map((course) {
-                        return Chip(
-                          label: Text(course.toString()),
-                          backgroundColor: Colors.deepPurple.shade50,
-                          labelStyle: const TextStyle(
-                            fontWeight: FontWeight.w600,
+                    courses.isEmpty
+                        ? const Text(
+                            "No courses available",
+                            style: TextStyle(color: Colors.grey),
+                          )
+                        : Wrap(
+                            spacing: 10,
+                            runSpacing: 10,
+                            children: courses.map((course) {
+                              return Chip(
+                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                                label: Text(course.toString()),
+                                backgroundColor: Colors.deepPurple.shade50,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                labelStyle: const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              );
+                            }).toList(),
                           ),
-                        );
-                      }).toList(),
-                    ),
                   ],
                 ),
               ),
@@ -139,27 +141,40 @@ class StudentDetailScreen extends StatelessWidget {
               // ---------- ABOUT ----------
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "About Student",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.05),
+                        blurRadius: 10,
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      "${student['name']} is currently enrolled in multiple courses. "
-                      "This profile displays student registration details, "
-                      "academic engagement, and learning progress.",
-                      style: const TextStyle(
-                        color: Colors.grey,
-                        height: 1.5,
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "About Student",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 10),
+                      Text(
+                        "${student['name']} is currently enrolled in multiple courses. "
+                        "This profile displays student registration details, "
+                        "academic engagement, and learning progress.",
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          height: 1.5,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
 
@@ -182,15 +197,15 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 90,
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      width: 95,
+      padding: const EdgeInsets.symmetric(vertical: 14),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(18),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
+            blurRadius: 12,
             offset: const Offset(0, 4),
           ),
         ],
@@ -200,7 +215,7 @@ class _StatCard extends StatelessWidget {
           Text(
             title,
             style: const TextStyle(
-              fontSize: 18,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
